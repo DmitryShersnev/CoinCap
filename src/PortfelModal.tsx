@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { deleteInPortfel } from "./redux/portfelSlice";
 import { Modal } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { close } from "./redux/portfelSlice";
 import { Table } from "antd";
+import { formatter } from "./helpers/formatter";
 
-const ModalPortfel: React.FC = () => {
+const PortfelModal: React.FC = () => {
   const isOpen = useSelector((state: any) => state.portfel.isOpen);
   const dispatch = useDispatch();
   const portfel = useSelector((state: any) => state.portfel.coinsInPortfel);
@@ -43,20 +45,19 @@ const ModalPortfel: React.FC = () => {
       key: "delete",
       fixed: "end",
       width: 100,
-      render: () => <button>❌</button>,
+      render: (_: any, record: any) => (
+        <button onClick={() => dispatch(deleteInPortfel(record.id))}>❌</button>
+      ),
     },
   ];
 
   const dataSourse = portfel.map((item: any) => ({
     name: item.name,
-    current_price: item.current_price,
+    current_price: `${formatter.format(item.current_price)}$`,
     amount: item.amount,
-    sum: item.current_price * item.amount,
+    sum: `${formatter.format(item.current_price * item.amount)}$`,
+    id: item.id,
   }));
-
-  const handleOk = () => {
-    dispatch(close());
-  };
 
   const handleCancel = () => {
     dispatch(close());
@@ -67,16 +68,16 @@ const ModalPortfel: React.FC = () => {
       <Modal
         closable={{ "aria-label": "Custom Close Button" }}
         open={isOpen}
-        onOk={handleOk}
+        footer={null}
         onCancel={handleCancel}
       >
         <h2>Портфель</h2>
 
         <Table columns={columns} dataSource={dataSourse} />
-        <h3>Итого: {total}</h3>
+        <h3>Итого: {formatter.format(total)} $</h3>
       </Modal>
     </>
   );
 };
 
-export default ModalPortfel;
+export default PortfelModal;

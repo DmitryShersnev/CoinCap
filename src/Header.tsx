@@ -2,7 +2,8 @@ import type React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import caseImg from "./assets/case.png";
 import { open } from "./redux/portfelSlice";
-import ModalPortfel from "./ModalPortfel";
+import PortfelModal from "./PortfelModal";
+import { formatter } from "./helpers/formatter";
 
 const Header: React.FC = () => {
   const coins = useSelector((state: any) => state.coins.coins);
@@ -24,7 +25,7 @@ const Header: React.FC = () => {
           return (
             <div key={item.id}>
               <p>{item.name}</p>
-              <p>{item.current_price}</p>
+              <p>{formatter.format(item.current_price)} $</p>
             </div>
           );
         })}
@@ -35,9 +36,9 @@ const Header: React.FC = () => {
         }}
       >
         <img src={caseImg} alt={"Портфель"} width={64} height={64}></img>
-        <h3>Итого: {total}</h3>
+        <h3>Итого: {formatter.format(total)} $</h3>
       </div>
-      <ModalPortfel />
+      <PortfelModal />
     </>
   );
 };

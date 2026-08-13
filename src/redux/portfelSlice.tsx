@@ -1,7 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
+
+const savedCoins = localStorage.getItem("coinsInPortfel");
 
 const initialState = {
-  coinsInPortfel: [],
+  coinsInPortfel: savedCoins ? JSON.parse(savedCoins) : [],
   isOpen: false,
 };
 
@@ -9,11 +12,26 @@ const portfelSlice = createSlice({
   name: "coinsInPortfel",
   initialState,
   reducers: {
-    addInPortfel: (state: any, action: any) => {
-      state.coinsInPortfel.push({ ...action.payload, amount: 1 });
+    addInPortfel: (
+      state: any,
+      action: PayloadAction<{ amount: number; coin: any }>,
+    ) => {
+      const { amount, coin } = action.payload;
+
+      state.coinsInPortfel.push({ ...coin, amount: amount });
+      localStorage.setItem(
+        "coinsInPortfel",
+        JSON.stringify(state.coinsInPortfel),
+      );
     },
     deleteInPortfel: (state: any, action: any) => {
-      state.coinsInPortfel.filter((item: any) => item !== action.payload);
+      state.coinsInPortfel = state.coinsInPortfel.filter(
+        (item: any) => item.id !== action.payload,
+      );
+      localStorage.setItem(
+        "coinsInPortfel",
+        JSON.stringify(state.coinsInPortfel),
+      );
     },
     open: (state: any) => {
       state.isOpen = true;

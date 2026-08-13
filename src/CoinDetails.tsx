@@ -1,20 +1,30 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import { addInPortfel } from "./redux/portfelSlice";
+import { useState } from "react";
+import { formatter } from "./helpers/formatter";
 
 const CoinDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [numberOfCoin, setNumberOfCoin] = useState(1);
 
   const coin = useSelector((state: any) =>
     state.coins.coins.find((item: any) => item.id === id),
   );
 
-  const formatter = new Intl.NumberFormat("ru-RU", {
-    notation: "compact",
-    compactDisplay: "short",
-  });
+  const inputChange = (e: any) => {
+    setNumberOfCoin(e.target.value);
+  };
+
+  const handleClickBuy = () => {
+    if (numberOfCoin > 0) {
+      dispatch(addInPortfel({ amount: numberOfCoin, coin }));
+      setNumberOfCoin(1);
+      navigate(-1);
+    }
+  };
 
   return (
     <>
@@ -22,16 +32,10 @@ const CoinDetails: React.FC = () => {
       <h1>{coin.name}</h1>
       <div>
         <p>Введите количество:</p>
-        <input></input>
-        <button
-          onClick={() => {
-            dispatch(addInPortfel(coin));
-          }}
-        >
-          Купить
-        </button>
+        <input type={"number"} min={1} onChange={inputChange}></input>
+        <button onClick={handleClickBuy}>Купить</button>
       </div>
-      <p>Цена: {formatter.format(coin.current_price)}$</p>
+      <p>Цена: {formatter.format(coin.current_price)} $</p>
       <p>
         Доступное предложение для торговли:{" "}
         {formatter.format(coin.circulating_supply)}
@@ -42,7 +46,7 @@ const CoinDetails: React.FC = () => {
       </p>
       <p>
         Средняя цена по объёму за последние 24 часа:{" "}
-        {formatter.format(coin.current_price)}$
+        {formatter.format(coin.current_price)} $
       </p>
       <p>
         Процентное изменение цены за последние 24 часа:{" "}
