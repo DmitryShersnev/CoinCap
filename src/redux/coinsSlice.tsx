@@ -10,12 +10,13 @@ export const getCoins = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await fetch(
-        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd",
+        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&sparkline=true",
         {
           headers: { "x-cg-demo-api-key": "CG-6Pv6zP2kBAgk2WUSeitZ3dD7" },
         },
       );
       const data = await response.json();
+
       return data;
     } catch (error) {
       console.log(error);

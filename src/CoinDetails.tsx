@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router";
 import { addInPortfel } from "./redux/portfelSlice";
 import { useState } from "react";
 import { formatter } from "./helpers/formatter";
+import Grafic from "./Grafic";
 
 const CoinDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -52,7 +53,8 @@ const CoinDetails: React.FC = () => {
         Процентное изменение цены за последние 24 часа:{" "}
         {coin.price_change_percentage_24h}
       </p>
-      <h1>ГРАФИК</h1>
+
+      <Grafic coin={coin} />
       <button
         onClick={() => {
           navigate(-1);
