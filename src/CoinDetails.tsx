@@ -4,6 +4,7 @@ import { addInPortfel } from "./redux/portfelSlice";
 import { useState } from "react";
 import { formatter } from "./helpers/formatter";
 import Grafic from "./Grafic";
+import { Input } from "antd";
 
 const CoinDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -29,39 +30,55 @@ const CoinDetails: React.FC = () => {
 
   return (
     <>
-      <img src={coin.image} alt={coin.name} width={64} height={64}></img>
-      <h1>{coin.name}</h1>
-      <div>
-        <p>Введите количество:</p>
-        <input type={"number"} min={1} onChange={inputChange}></input>
-        <button onClick={handleClickBuy}>Купить</button>
+      <div className="coinDetails-container">
+        <div className="coinDetails-name">
+          <img src={coin.image} alt={coin.name} width={64} height={64}></img>
+          <h1>{coin.name}</h1>
+        </div>
+        <div className="addCoin">
+          <p>Введите количество:</p>
+          <input
+            placeholder={"Введите количество"}
+            type={"number"}
+            min={1}
+            onChange={inputChange}
+          ></input>
+          <button onClick={handleClickBuy}>Купить</button>
+        </div>
+        <div className="coinPrice">
+          <h2>Цена:</h2>
+          <h2 style={{ color: "#ea3dc8" }}>
+            {formatter.format(coin.current_price)} $
+          </h2>
+        </div>
+        <p>
+          Доступное предложение для торговли:{" "}
+          {formatter.format(coin.circulating_supply)}
+        </p>
+        <p>Общее кол-во активов: {formatter.format(coin.total_supply)}</p>
+        <p>
+          Объём торгов за последние 24 часа:{" "}
+          {formatter.format(coin.total_volume)}
+        </p>
+        <p>
+          Средняя цена по объёму за последние 24 часа:{" "}
+          {formatter.format(coin.current_price)} $
+        </p>
+        <p>
+          Процентное изменение цены за последние 24 часа:{" "}
+          {coin.price_change_percentage_24h}
+        </p>
+        <div className="grafic-container">
+          <Grafic coin={coin} />
+        </div>
+        <button
+          onClick={() => {
+            navigate(-1);
+          }}
+        >
+          Назад
+        </button>
       </div>
-      <p>Цена: {formatter.format(coin.current_price)} $</p>
-      <p>
-        Доступное предложение для торговли:{" "}
-        {formatter.format(coin.circulating_supply)}
-      </p>
-      <p>Общее кол-во активов: {formatter.format(coin.total_supply)}</p>
-      <p>
-        Объём торгов за последние 24 часа: {formatter.format(coin.total_volume)}
-      </p>
-      <p>
-        Средняя цена по объёму за последние 24 часа:{" "}
-        {formatter.format(coin.current_price)} $
-      </p>
-      <p>
-        Процентное изменение цены за последние 24 часа:{" "}
-        {coin.price_change_percentage_24h}
-      </p>
-
-      <Grafic coin={coin} />
-      <button
-        onClick={() => {
-          navigate(-1);
-        }}
-      >
-        Назад
-      </button>
     </>
   );
 };

@@ -17,8 +17,13 @@ const portfelSlice = createSlice({
       action: PayloadAction<{ amount: number; coin: any }>,
     ) => {
       const { amount, coin } = action.payload;
+      const existing = state.coinsInPortfel.find((item) => item.id === coin.id);
+      if (existing) {
+        existing.amount = Number(existing.amount) + Number(amount);
+      } else {
+        state.coinsInPortfel.push({ ...coin, amount: amount });
+      }
 
-      state.coinsInPortfel.push({ ...coin, amount: amount });
       localStorage.setItem(
         "coinsInPortfel",
         JSON.stringify(state.coinsInPortfel),

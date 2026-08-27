@@ -89,17 +89,8 @@ const Grafic: React.FC = ({ coin }) => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        width: "100%",
-        margin: "20px 0",
-      }}
-    >
-      <div style={{ height: 300, width: 500 }}>
-        <Line data={graficData} options={graficOptions} />
-      </div>
+    <div className="grafic">
+      <Line data={graficData} options={graficOptions} />
     </div>
   );
 };

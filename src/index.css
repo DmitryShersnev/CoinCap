@@ -10,11 +10,13 @@ body {
 }
 button {
   background-color: rgb(234, 61, 200);
-  border-radius: 15;
+  border-radius: 10px;
+  padding: 5px 10px;
 }
 .addButton {
-  border: 20;
-  border-radius: 50%;
+  background-color: white;
+  border-radius: 20%;
+  padding: 5px 10px;
 }
 
 .header-container {
@@ -24,7 +26,7 @@ button {
   padding: 20px 20px;
 }
 .popular-coins {
-  margin-left: 90px;
+  margin-left: 150px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -53,7 +55,7 @@ button {
   color: #8c8c8c;
 }
 .portfel {
-  margin-right: 90px;
+  margin-right: 150px;
   display: flex;
   align-items: center;
   gap: 20px;
@@ -62,4 +64,49 @@ button {
 .total {
   text-align: left;
   line-height: 0.3;
+}
+.table {
+  margin-left: 70px;
+  margin-right: 70px;
+}
+.coinDetails-container {
+  margin: 40px;
+}
+.coinDetails-name {
+  margin-bottom: 40px;
+}
+.addCoin {
+  margin-bottom: 40px;
+  gap: 20px;
+}
+.coinPrice {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+  gap: 10px;
+}
+.grafic-container {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+.grafic {
+  height: 400px;
+  width: 600px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.deleteButton {
+  background-color: white;
+  border-radius: 20%;
+}
+input {
+  border-radius: 10px;
+  height: 24px;
+  margin-right: 10px;
+  width: 250px;
 }

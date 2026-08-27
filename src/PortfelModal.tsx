@@ -46,7 +46,12 @@ const PortfelModal: React.FC = () => {
       fixed: "end",
       width: 100,
       render: (_: any, record: any) => (
-        <button onClick={() => dispatch(deleteInPortfel(record.id))}>❌</button>
+        <button
+          className="deleteButton"
+          onClick={() => dispatch(deleteInPortfel(record.id))}
+        >
+          ❌
+        </button>
       ),
     },
   ];

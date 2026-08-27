@@ -8,7 +8,9 @@ const CoinCap: React.FC = () => {
     <>
       <Header />
 
-      <TableComp />
+      <div className="table">
+        <TableComp />
+      </div>
       <BuyModal />
     </>
   );

@@ -20,7 +20,7 @@ const TableComp: React.FC = () => {
       key: "market_cap_rank",
     },
     {
-      title: "symbol",
+      title: "Symbol",
       width: 20,
       dataIndex: "symbol",
       key: "symbol",
