@@ -24,12 +24,18 @@ const TableComp: React.FC = () => {
       width: 20,
       dataIndex: "symbol",
       key: "symbol",
+      render: (text: string) => (
+        <span style={{ color: "#ea3dc8", fontWeight: "bold" }}>{text}</span>
+      ),
     },
     {
       title: "Name",
       width: 100,
       dataIndex: "name",
       key: "name",
+      render: (text: string) => (
+        <span style={{ fontWeight: "bold" }}>{text}</span>
+      ),
     },
     {
       title: "VWAP (24Hr)",
@@ -42,6 +48,19 @@ const TableComp: React.FC = () => {
       dataIndex: "price_change_24h",
       key: "price_change_24h",
       width: 100,
+      render: (value: number) => {
+        const isPositive = value >= 0;
+        return (
+          <span
+            style={{
+              color: isPositive ? "#22c55e" : "#ef4444",
+              fontWeight: "bold",
+            }}
+          >
+            {isPositive ? `+${value.toFixed(2)}%` : `${value.toFixed(2)}%`}
+          </span>
+        );
+      },
     },
     {
       title: "Market Cap",
@@ -54,6 +73,9 @@ const TableComp: React.FC = () => {
       dataIndex: "current_price",
       key: "current_price",
       width: 100,
+      render: (text: string) => (
+        <span style={{ fontWeight: "bold" }}>{text}</span>
+      ),
     },
     {
       title: "",
@@ -62,12 +84,13 @@ const TableComp: React.FC = () => {
       width: 100,
       render: (_: any, record: any) => (
         <button
+          className="addButton"
           onClick={(e) => {
             e.stopPropagation();
             dispatch(openBuyModal(record.originalCoin));
           }}
         >
-          +
+          ➕
         </button>
       ),
     },
@@ -75,6 +98,7 @@ const TableComp: React.FC = () => {
 
   useEffect(() => {
     dispatch(getCoins());
+    console.log("запрос на сервер");
   }, []);
 
   const dataSourse = coins.map((item: any, index: number) => ({
@@ -102,7 +126,7 @@ const TableComp: React.FC = () => {
         columns={columns}
         dataSource={dataSourse}
         onRow={onRow}
-        rowKey="name"
+        rowKey="id"
       />
     </>
   );

@@ -7,7 +7,7 @@ const CoinCap: React.FC = () => {
   return (
     <>
       <Header />
-      <hr></hr>
+
       <TableComp />
       <BuyModal />
     </>

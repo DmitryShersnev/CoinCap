@@ -4,4 +4,62 @@
 
 body {
   margin: 0;
+  background-color: rgb(13, 5, 46);
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+}
+button {
+  background-color: rgb(234, 61, 200);
+  border-radius: 15;
+}
+.addButton {
+  border: 20;
+  border-radius: 50%;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 20px;
+}
+.popular-coins {
+  margin-left: 90px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.popular-title {
+  margin: 0;
+  font-weight: 500;
+}
+.coins-row {
+  display: flex;
+  gap: 20px;
+}
+.coin-item {
+  text-align: center;
+}
+
+.coin-name {
+  margin: 0;
+  font-size: 16px;
+  color: rgb(234, 61, 200);
+}
+
+.coin-price {
+  margin: 0;
+  font-weight: 500;
+  color: #8c8c8c;
+}
+.portfel {
+  margin-right: 90px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  cursor: pointer;
+}
+.total {
+  text-align: left;
+  line-height: 0.3;
 }

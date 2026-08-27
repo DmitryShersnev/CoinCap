@@ -19,24 +19,43 @@ const Header: React.FC = () => {
 
   return (
     <>
-      <div>
-        <p>Популярные криптовалюты:</p>
-        {popular.map((item: any) => {
-          return (
-            <div key={item.id}>
-              <p>{item.name}</p>
-              <p>{formatter.format(item.current_price)} $</p>
-            </div>
-          );
-        })}
-      </div>
-      <div
-        onClick={() => {
-          dispatch(open());
-        }}
-      >
-        <img src={caseImg} alt={"Портфель"} width={64} height={64}></img>
-        <h3>Итого: {formatter.format(total)} $</h3>
+      <div className="header-container">
+        <div className="popular-coins">
+          <p className="popular-title">Популярные криптовалюты:</p>
+          <div className="coins-row">
+            {popular.map((item: any) => {
+              return (
+                <div key={item.id} className="coin-item">
+                  <p className="coin-name">{item.name}</p>
+                  <p className="coin-price">
+                    {formatter.format(item.current_price)} $
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        <div
+          className="portfel"
+          onClick={() => {
+            dispatch(open());
+          }}
+        >
+          <div className="portfel-icon">
+            <img
+              src={caseImg}
+              alt={"Портфель"}
+              width={50}
+              height={50}
+              style={{ filter: "brightness(0) invert(1)" }}
+            ></img>
+          </div>
+          <div className="total">
+            <p>Итого:</p>
+            <p style={{ color: "#ea3dc8" }}>{formatter.format(total)} $</p>
+          </div>
+        </div>
       </div>
       <PortfelModal />
     </>
