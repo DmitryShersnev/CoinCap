@@ -4,7 +4,7 @@ import type { Coin } from "./coinsSlice";
 
 const savedCoins = localStorage.getItem("coinsInPortfel");
 
-type CoinsInPortfel = Coin & { amount: number };
+export type CoinsInPortfel = Coin & { amount: number };
 
 type StateType = {
   coinsInPortfel: CoinsInPortfel[];
