@@ -1,18 +1,32 @@
 import React from "react";
 import { Table } from "antd";
 import { useEffect } from "react";
-import { getCoins } from "./redux/coinsSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { getCoins, type Coin } from "./redux/coinsSlice";
 import { useNavigate } from "react-router";
 import { openBuyModal } from "./redux/buyModalSlice";
 import { formatter } from "./helpers/formatter";
+import { useAppDispatch, useAppSelector } from "./redux/hooks/hooks";
+import type { TableProps } from "antd";
+
+type TableCoinDataType = {
+  key: string;
+  id: string;
+  market_cap_rank: number;
+  symbol: string;
+  name: string;
+  vwap: string;
+  price_change_24h: number;
+  market_cap: string;
+  current_price: string;
+  originalCoin: Coin;
+};
 
 const TableComp: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const coins = useSelector((state: any) => state.coins.coins);
+  const coins = useAppSelector((state) => state.coins.coins);
 
-  const columns = [
+  const columns: TableProps<TableCoinDataType>["columns"] = [
     {
       title: "№",
       width: 20,
@@ -82,7 +96,7 @@ const TableComp: React.FC = () => {
       key: "plus",
       fixed: "end",
       width: 100,
-      render: (_: any, record: any) => (
+      render: (_, record) => (
         <button
           className="addButton"
           onClick={(e) => {
@@ -98,10 +112,9 @@ const TableComp: React.FC = () => {
 
   useEffect(() => {
     dispatch(getCoins());
-    console.log("запрос на сервер");
-  }, []);
+  }, [dispatch]);
 
-  const dataSourse = coins.map((item: any, index: number) => ({
+  const dataSourse: TableCoinDataType[] = coins.map((item: Coin) => ({
     key: item.id,
     id: item.id,
     market_cap_rank: item.market_cap_rank,
@@ -114,7 +127,7 @@ const TableComp: React.FC = () => {
     originalCoin: item,
   }));
 
-  const onRow = (record: any) => {
+  const onRow: TableProps<TableCoinDataType>["onRow"] = (record) => {
     return {
       onClick: () => navigate(`/coins/${record.id}`),
     };

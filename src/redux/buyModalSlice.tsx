@@ -1,7 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import type { Coin } from "./coinsSlice";
 
-const initialState = {
+type StateType = {
+  buyModalIsOpen: boolean;
+  selectedCoin: Coin | null;
+};
+
+const initialState: StateType = {
   buyModalIsOpen: false,
   selectedCoin: null,
 };
@@ -10,11 +16,11 @@ const buyModalSlice = createSlice({
   name: "addCoinSlice",
   initialState,
   reducers: {
-    openBuyModal: (state: any, action: PayloadAction<any>) => {
+    openBuyModal: (state: StateType, action: PayloadAction<Coin>) => {
       state.buyModalIsOpen = true;
       state.selectedCoin = action.payload;
     },
-    closeBuyModal: (state: any) => {
+    closeBuyModal: (state: StateType) => {
       state.buyModalIsOpen = false;
       state.selectedCoin = null;
     },

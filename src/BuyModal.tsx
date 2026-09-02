@@ -1,12 +1,14 @@
 import React, { useState } from "react";
+import type { ChangeEvent } from "react";
 import { Modal } from "antd";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addInPortfel } from "./redux/portfelSlice";
 import { closeBuyModal } from "./redux/buyModalSlice";
+import { useAppSelector } from "./redux/hooks/hooks";
 
 const BuyModal: React.FC = () => {
-  const { buyModalIsOpen, selectedCoin } = useSelector(
-    (state: any) => state.buyModal,
+  const { buyModalIsOpen, selectedCoin } = useAppSelector(
+    (state) => state.buyModal,
   );
 
   const dispatch = useDispatch();
@@ -17,11 +19,12 @@ const BuyModal: React.FC = () => {
     dispatch(closeBuyModal());
   };
 
-  const handleChange = (e) => {
-    setAmount(e.target.value);
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setAmount(Number(e.target.value));
   };
 
   const handleClick = () => {
+    if (!selectedCoin) return;
     if (amount > 0) {
       dispatch(addInPortfel({ amount, coin: selectedCoin }));
       setAmount(1);
@@ -37,9 +40,9 @@ const BuyModal: React.FC = () => {
         footer={null}
         onCancel={handleCancel}
       >
-        <h2>Купить монету {selectedCoin ? selectedCoin.name : null}</h2>
+        <h2>Купить монету {selectedCoin ? selectedCoin.name : ""}</h2>
         <p>Введите количество</p>
-        <input type="number" min="1" onChange={handleChange}></input>
+        <input type="number" min={1} onChange={handleChange}></input>
         <button onClick={handleClick}>Добавить</button>
       </Modal>
     </>

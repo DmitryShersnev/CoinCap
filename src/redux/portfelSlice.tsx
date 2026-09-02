@@ -1,10 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import type { Coin } from "./coinsSlice";
 
 const savedCoins = localStorage.getItem("coinsInPortfel");
 
-const initialState = {
-  coinsInPortfel: savedCoins ? JSON.parse(savedCoins) : [],
+type CoinsInPortfel = Coin & { amount: number };
+
+type StateType = {
+  coinsInPortfel: CoinsInPortfel[];
+  isOpen: boolean;
+};
+
+const initialState: StateType = {
+  coinsInPortfel: savedCoins
+    ? (JSON.parse(savedCoins) as CoinsInPortfel[])
+    : [],
   isOpen: false,
 };
 
@@ -13,11 +23,13 @@ const portfelSlice = createSlice({
   initialState,
   reducers: {
     addInPortfel: (
-      state: any,
-      action: PayloadAction<{ amount: number; coin: any }>,
+      state: StateType,
+      action: PayloadAction<{ amount: number; coin: Coin }>,
     ) => {
       const { amount, coin } = action.payload;
-      const existing = state.coinsInPortfel.find((item) => item.id === coin.id);
+      const existing = state.coinsInPortfel.find(
+        (item: CoinsInPortfel) => item.id === coin.id,
+      );
       if (existing) {
         existing.amount = Number(existing.amount) + Number(amount);
       } else {
@@ -29,19 +41,19 @@ const portfelSlice = createSlice({
         JSON.stringify(state.coinsInPortfel),
       );
     },
-    deleteInPortfel: (state: any, action: any) => {
+    deleteInPortfel: (state: StateType, action: PayloadAction<string>) => {
       state.coinsInPortfel = state.coinsInPortfel.filter(
-        (item: any) => item.id !== action.payload,
+        (item: CoinsInPortfel) => item.id !== action.payload,
       );
       localStorage.setItem(
         "coinsInPortfel",
         JSON.stringify(state.coinsInPortfel),
       );
     },
-    open: (state: any) => {
+    open: (state: StateType) => {
       state.isOpen = true;
     },
-    close: (state: any) => {
+    close: (state: StateType) => {
       state.isOpen = false;
     },
   },

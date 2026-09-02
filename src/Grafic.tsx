@@ -11,6 +11,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import type { Coin } from "./redux/coinsSlice";
 
 ChartJS.register(
   CategoryScale,
@@ -22,7 +23,11 @@ ChartJS.register(
   Legend,
 );
 
-const Grafic: React.FC = ({ coin }) => {
+type PropsType = {
+  coin: Coin;
+};
+
+const Grafic: React.FC<PropsType> = ({ coin }) => {
   if (!coin) {
     return <h2>Загрузка данных монеты...</h2>;
   }
@@ -64,7 +69,7 @@ const Grafic: React.FC = ({ coin }) => {
         },
 
         ticks: {
-          callback: function (val: any, index: number) {
+          callback: function (_: any, index: number) {
             return index % 24 === 0 ? `День ${Math.floor(index / 24) + 1}` : "";
           },
           maxRotation: 0,

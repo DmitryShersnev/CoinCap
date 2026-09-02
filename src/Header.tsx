@@ -1,21 +1,25 @@
-import type React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React from "react";
+import { useDispatch } from "react-redux";
 import caseImg from "./assets/case.png";
 import { open } from "./redux/portfelSlice";
 import PortfelModal from "./PortfelModal";
 import { formatter } from "./helpers/formatter";
+import type { Coin } from "./redux/coinsSlice";
+import { useAppSelector } from "./redux/hooks/hooks";
+import type { CoinsInPortfel } from "./redux/portfelSlice";
 
 const Header: React.FC = () => {
-  const coins = useSelector((state: any) => state.coins.coins);
-  const portfel = useSelector((state: any) => state.portfel.coinsInPortfel);
+  const coins = useAppSelector((state) => state.coins.coins);
+  const portfel = useAppSelector((state) => state.portfel.coinsInPortfel);
   const total = portfel.reduce(
-    (acc: any, item: any) => acc + item.current_price * item.amount,
+    (acc: number, item: CoinsInPortfel) =>
+      acc + item.current_price * item.amount,
     0,
   );
 
   const dispatch = useDispatch();
 
-  const popular = coins.slice(0, 3);
+  const popular: Coin[] = coins.slice(0, 3);
 
   return (
     <>
@@ -23,7 +27,7 @@ const Header: React.FC = () => {
         <div className="popular-coins">
           <p className="popular-title">Популярные криптовалюты:</p>
           <div className="coins-row">
-            {popular.map((item: any) => {
+            {popular.map((item: Coin) => {
               return (
                 <div key={item.id} className="coin-item">
                   <p className="coin-name">{item.name}</p>

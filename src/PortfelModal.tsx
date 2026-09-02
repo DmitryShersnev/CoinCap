@@ -1,21 +1,33 @@
-import React, { useState } from "react";
+import React from "react";
 import { deleteInPortfel } from "./redux/portfelSlice";
 import { Modal } from "antd";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { close } from "./redux/portfelSlice";
 import { Table } from "antd";
 import { formatter } from "./helpers/formatter";
+import { useAppSelector } from "./redux/hooks/hooks";
+import type { CoinsInPortfel } from "./redux/portfelSlice";
+import type { ColumnsType } from "antd/es/table";
+
+type PortfelRow = {
+  id: string;
+  name: string;
+  current_price: string;
+  amount: number;
+  sum: string;
+};
 
 const PortfelModal: React.FC = () => {
-  const isOpen = useSelector((state: any) => state.portfel.isOpen);
+  const isOpen = useAppSelector((state) => state.portfel.isOpen);
   const dispatch = useDispatch();
-  const portfel = useSelector((state: any) => state.portfel.coinsInPortfel);
+  const portfel = useAppSelector((state) => state.portfel.coinsInPortfel);
   const total = portfel.reduce(
-    (acc: any, item: any) => acc + item.current_price * item.amount,
+    (acc: number, item: CoinsInPortfel) =>
+      acc + item.current_price * item.amount,
     0,
   );
 
-  const columns = [
+  const columns: ColumnsType<PortfelRow> = [
     {
       title: "Название",
       width: 20,
@@ -45,7 +57,7 @@ const PortfelModal: React.FC = () => {
       key: "delete",
       fixed: "end",
       width: 100,
-      render: (_: any, record: any) => (
+      render: (_: any, record: PortfelRow) => (
         <button
           className="deleteButton"
           onClick={() => dispatch(deleteInPortfel(record.id))}
@@ -56,7 +68,7 @@ const PortfelModal: React.FC = () => {
     },
   ];
 
-  const dataSourse = portfel.map((item: any) => ({
+  const dataSourse: PortfelRow[] = portfel.map((item: CoinsInPortfel) => ({
     name: item.name,
     current_price: `${formatter.format(item.current_price)}$`,
     amount: item.amount,
@@ -78,7 +90,7 @@ const PortfelModal: React.FC = () => {
       >
         <h2>Портфель</h2>
 
-        <Table columns={columns} dataSource={dataSourse} />
+        <Table columns={columns} dataSource={dataSourse} rowKey="id" />
         <h3>Итого: {formatter.format(total)} $</h3>
       </Modal>
     </>

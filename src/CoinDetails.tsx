@@ -1,23 +1,30 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import { addInPortfel } from "./redux/portfelSlice";
 import { useState } from "react";
 import { formatter } from "./helpers/formatter";
 import Grafic from "./Grafic";
-import { Input } from "antd";
+
+import type { ChangeEvent } from "react";
+import type { Coin } from "./redux/coinsSlice";
+import { useAppSelector } from "./redux/hooks/hooks";
 
 const CoinDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [numberOfCoin, setNumberOfCoin] = useState(1);
+  const [numberOfCoin, setNumberOfCoin] = useState(0);
 
-  const coin = useSelector((state: any) =>
-    state.coins.coins.find((item: any) => item.id === id),
+  const coin = useAppSelector((state) =>
+    state.coins.coins.find((item: Coin) => item.id === id),
   );
 
-  const inputChange = (e: any) => {
-    setNumberOfCoin(e.target.value);
+  if (!coin) {
+    return <h2>Монета не найдена</h2>;
+  }
+
+  const inputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setNumberOfCoin(Number(e.target.value));
   };
 
   const handleClickBuy = () => {
