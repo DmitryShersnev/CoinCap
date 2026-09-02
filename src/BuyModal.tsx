@@ -13,7 +13,7 @@ const BuyModal: React.FC = () => {
 
   const dispatch = useDispatch();
 
-  const [amount, setAmount] = useState(1);
+  const [amount, setAmount] = useState(0);
 
   const handleCancel = () => {
     dispatch(closeBuyModal());

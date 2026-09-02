@@ -25,6 +25,7 @@ const TableComp: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const coins = useAppSelector((state) => state.coins.coins);
+  const loading = useAppSelector((state) => state.coins.loading);
 
   const columns: TableProps<TableCoinDataType>["columns"] = [
     {
@@ -136,6 +137,7 @@ const TableComp: React.FC = () => {
   return (
     <>
       <Table
+        loading={loading}
         columns={columns}
         dataSource={dataSourse}
         onRow={onRow}
