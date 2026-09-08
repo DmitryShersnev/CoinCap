@@ -122,7 +122,7 @@ const TableComp: React.FC = () => {
     symbol: item.symbol.toUpperCase(),
     name: item.name,
     vwap: `${formatter.format(item.current_price)} $`,
-    price_change_24h: item.price_change_percentage_24h,
+    price_change_24h: item.price_change_percentage_24h ?? 0,
     market_cap: formatter.format(item.market_cap),
     current_price: `${formatter.format(item.current_price)} $`,
     originalCoin: item,

@@ -1,13 +1,14 @@
 import React from "react";
 import { deleteInPortfel } from "./redux/portfelSlice";
 import { Modal } from "antd";
-import { useDispatch } from "react-redux";
+
 import { close } from "./redux/portfelSlice";
 import { Table } from "antd";
 import { formatter } from "./helpers/formatter";
-import { useAppSelector } from "./redux/hooks/hooks";
+import { useAppDispatch, useAppSelector } from "./redux/hooks/hooks";
 import type { CoinsInPortfel } from "./redux/portfelSlice";
 import type { ColumnsType } from "antd/es/table";
+import { portfelCalculator } from "./helpers/portfelCalculator";
 
 type PortfelRow = {
   id: string;
@@ -19,13 +20,12 @@ type PortfelRow = {
 
 const PortfelModal: React.FC = () => {
   const isOpen = useAppSelector((state) => state.portfel.isOpen);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+
   const portfel = useAppSelector((state) => state.portfel.coinsInPortfel);
-  const total = portfel.reduce(
-    (acc: number, item: CoinsInPortfel) =>
-      acc + item.current_price * item.amount,
-    0,
-  );
+  const liveCoins = useAppSelector((state) => state.coins.coins);
+
+  const { totalNew, diff, percentDiff } = portfelCalculator(portfel, liveCoins);
 
   const columns: ColumnsType<PortfelRow> = [
     {
@@ -68,17 +68,25 @@ const PortfelModal: React.FC = () => {
     },
   ];
 
-  const dataSourse: PortfelRow[] = portfel.map((item: CoinsInPortfel) => ({
-    name: item.name,
-    current_price: `${formatter.format(item.current_price)}$`,
-    amount: item.amount,
-    sum: `${formatter.format(item.current_price * item.amount)}$`,
-    id: item.id,
-  }));
+  const dataSourse: PortfelRow[] = portfel.map((item: CoinsInPortfel) => {
+    const liveCoin = liveCoins.find((c) => c.id === item.id);
+    const currentPrice = liveCoin ? liveCoin.current_price : item.current_price;
+
+    return {
+      id: item.id,
+      name: item.name,
+      current_price: `${formatter.format(currentPrice)}$`,
+      amount: item.amount,
+      sum: `${formatter.format(currentPrice * item.amount)}$`,
+    };
+  });
 
   const handleCancel = () => {
     dispatch(close());
   };
+
+  const sign = diff >= 0 ? "+" : "";
+  const diffColor = diff >= 0 ? "#22c55e" : "#ef4444";
 
   return (
     <>
@@ -91,7 +99,15 @@ const PortfelModal: React.FC = () => {
         <h2>Портфель</h2>
 
         <Table columns={columns} dataSource={dataSourse} rowKey="id" />
-        <h3>Итого: {formatter.format(total)} $</h3>
+
+        <h3>
+          Итого: {formatter.format(totalNew)}${" "}
+          <span style={{ color: diffColor }}>
+            {sign}
+            {diff.toFixed(2)}$ ({sign}
+            {percentDiff.toFixed(2)}%)
+          </span>
+        </h3>
       </Modal>
     </>
   );
