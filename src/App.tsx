@@ -8,7 +8,7 @@ const App: React.FC = () => {
   return (
     <>
       <Routes>
-        <Route path="/" element={<CoinCap />} />
+        <Route path="/CoinCap" element={<CoinCap />} />
         <Route path="/coins/:id" element={<CoinDetails />} />
       </Routes>
     </>
