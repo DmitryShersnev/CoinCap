@@ -1,7 +1,7 @@
 import type React from "react";
-import Header from "./Header";
-import BuyModal from "./BuyModal";
-import TableComp from "./TableComp";
+import Header from "../components/Header";
+import BuyModal from "../components/BuyModal";
+import TableComp from "../components/TableComp";
 
 const CoinCap: React.FC = () => {
   return (

@@ -1,12 +1,12 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import caseImg from "./assets/case.png";
-import { open } from "./redux/portfelSlice";
+
+import caseImg from "../assets/case.png";
+import { open } from "../redux/portfelSlice";
 import PortfelModal from "./PortfelModal";
-import { formatter } from "./helpers/formatter";
-import type { Coin } from "./redux/coinsSlice";
-import { useAppSelector } from "./redux/hooks/hooks";
-import type { CoinsInPortfel } from "./redux/portfelSlice";
+import { formatter } from "../helpers/formatter";
+import type { Coin } from "../redux/coinsSlice";
+import { useAppDispatch, useAppSelector } from "../redux/hooks/hooks";
+import type { CoinsInPortfel } from "../redux/portfelSlice";
 
 const Header: React.FC = () => {
   const coins = useAppSelector((state) => state.coins.coins);
@@ -17,7 +17,7 @@ const Header: React.FC = () => {
     0,
   );
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const popular: Coin[] = coins.slice(0, 3);
 

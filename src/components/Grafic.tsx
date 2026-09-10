@@ -11,7 +11,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import type { Coin } from "./redux/coinsSlice";
+import type { Coin } from "../redux/coinsSlice";
 
 ChartJS.register(
   CategoryScale,

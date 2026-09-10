@@ -1,13 +1,13 @@
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router";
-import { addInPortfel } from "./redux/portfelSlice";
+import { addInPortfel } from "../redux/portfelSlice";
 import { useState } from "react";
-import { formatter } from "./helpers/formatter";
-import Grafic from "./Grafic";
+import { formatter } from "../helpers/formatter";
+import Grafic from "../components/Grafic";
 
 import type { ChangeEvent } from "react";
-import type { Coin } from "./redux/coinsSlice";
-import { useAppSelector } from "./redux/hooks/hooks";
+import type { Coin } from "../redux/coinsSlice";
+import { useAppSelector } from "../redux/hooks/hooks";
 
 const CoinDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();

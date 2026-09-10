@@ -1,6 +1,5 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-
-import { createAppAsyncThunk } from "./hooks/hooks";
+import { getCoins } from "../api/fetchCoins";
 
 export type Coin = {
   ath: number;
@@ -41,29 +40,6 @@ const initialState: StateType = {
   coins: [],
   loading: false,
 };
-
-export const getCoins = createAppAsyncThunk<Coin[], void>(
-  "coincap/getCoins",
-  async (_, thunkAPI) => {
-    try {
-      const response = await fetch(
-        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&sparkline=true",
-        {
-          headers: { "x-cg-demo-api-key": "CG-6Pv6zP2kBAgk2WUSeitZ3dD7" },
-        },
-      );
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
-
-      return data;
-    } catch (e) {
-      const error = e as { message: string };
-      return thunkAPI.rejectWithValue(error.message);
-    }
-  },
-);
 
 const coinsSlice = createSlice({
   name: "coins",

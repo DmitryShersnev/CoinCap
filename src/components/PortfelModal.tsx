@@ -1,14 +1,14 @@
 import React from "react";
-import { deleteInPortfel } from "./redux/portfelSlice";
+import { deleteInPortfel } from "../redux/portfelSlice";
 import { Modal } from "antd";
 
-import { close } from "./redux/portfelSlice";
+import { close } from "../redux/portfelSlice";
 import { Table } from "antd";
-import { formatter } from "./helpers/formatter";
-import { useAppDispatch, useAppSelector } from "./redux/hooks/hooks";
-import type { CoinsInPortfel } from "./redux/portfelSlice";
+import { formatter } from "../helpers/formatter";
+import { useAppDispatch, useAppSelector } from "../redux/hooks/hooks";
+import type { CoinsInPortfel } from "../redux/portfelSlice";
 import type { ColumnsType } from "antd/es/table";
-import { portfelCalculator } from "./helpers/portfelCalculator";
+import { portfelCalculator } from "../helpers/portfelCalculator";
 
 type PortfelRow = {
   id: string;

@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import type { ChangeEvent } from "react";
 import { Modal } from "antd";
 import { useDispatch } from "react-redux";
-import { addInPortfel } from "./redux/portfelSlice";
-import { closeBuyModal } from "./redux/buyModalSlice";
-import { useAppSelector } from "./redux/hooks/hooks";
+import { addInPortfel } from "../redux/portfelSlice";
+import { closeBuyModal } from "../redux/buyModalSlice";
+import { useAppSelector } from "../redux/hooks/hooks";
 
 const BuyModal: React.FC = () => {
   const { buyModalIsOpen, selectedCoin } = useAppSelector(

@@ -1,11 +1,12 @@
 import React from "react";
 import { Table } from "antd";
 import { useEffect } from "react";
-import { getCoins, type Coin } from "./redux/coinsSlice";
+import type { Coin } from "../redux/coinsSlice";
+import { getCoins } from "../api/fetchCoins";
 import { useNavigate } from "react-router";
-import { openBuyModal } from "./redux/buyModalSlice";
-import { formatter } from "./helpers/formatter";
-import { useAppDispatch, useAppSelector } from "./redux/hooks/hooks";
+import { openBuyModal } from "../redux/buyModalSlice";
+import { formatter } from "../helpers/formatter";
+import { useAppDispatch, useAppSelector } from "../redux/hooks/hooks";
 import type { TableProps } from "antd";
 
 type TableCoinDataType = {

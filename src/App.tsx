@@ -1,8 +1,8 @@
 import "./App.css";
 import type React from "react";
 import { Route, Routes } from "react-router";
-import CoinCap from "./CoinCap";
-import CoinDetails from "./CoinDetails";
+import CoinCap from "./pages/CoinCap";
+import CoinDetails from "./pages/CoinDetails";
 
 const App: React.FC = () => {
   return (
